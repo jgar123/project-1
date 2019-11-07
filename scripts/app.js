@@ -4,9 +4,11 @@ function main () {
   const scoreBoard = document.querySelector('#score')
   const reset = document.querySelector('#reset')
   const leaderBoard = document.querySelector('#leaderboard')
+  const scoresOnTheDoors = document.querySelectorAll('#leaderboard div')
   const sideBit = document.querySelector('#small-stuff')
+  const result = document.querySelector('#result')
   const width = 36
-  const cells = []
+  let cells = []
   let snake = [149, 150, 151, 152]
   let intervalId
   let foodPosition
@@ -40,16 +42,18 @@ function main () {
     for (let i = 0; i < snake.length; i++) {
       cells[snake[i]].classList.add('player')
     }
-    for (let i = 0; i < 10; i++) {
-      const test = document.createElement('div')
-      top10.push(test)
-      leaderBoard.appendChild(test)
-    }
+    // for (let i = 0; i < 10; i++) {
+    //   const test = document.createElement('div')
+    //   top10.push(test)
+    //   leaderBoard.appendChild(test)
+    //   test.innerHTML = 0
+    // }
+
     foodRandomise()
   }
 
   setup()
-
+  
   function foodRandomise() {
     foodPosition = Math.floor(Math.random() * width ** 2)
     if (snake.includes(foodPosition) || cells[foodPosition].classList.contains('border')) {
@@ -72,16 +76,15 @@ function main () {
     if (cells[snake[snake.length - 1]].classList.contains('border') || selfCollision() === true) {
       console.log('You lost weyyyyy')
       clearInterval(intervalId)
-      for (let i = 0; i < width ** 2; i++) {
-        grid.removeChild(grid.firstChild)
-        grid.innerHTML = `GAME OVER - FINAL SCORE: ${score}`
-        // sideBit.removeChild(sideBit.firstChild)
-
-        // if (cells[i].classList.contains('player') || cells[i].classList.contains('food')) {
-        //   cells[i].classList.remove('player')
-        //   cells[i].classList.remove('food')
-        // }
-      }
+      // for (let i = 0; i < width ** 2; i++) {
+      //   grid.removeChild(grid.firstChild)
+      // }
+      cells = []
+      grid.innerHTML = `GAME OVER! <br>SCORE: ${score}`
+      grid.style.fontSize = 'xx-large'
+      grid.style.color = 'white'
+      grid.style.animation = 'fud 1s infinite'
+      grid.style.textShadow = '5px 5px 1px #ff0000, 10px 10px 1px #0000ff'
       return true
     }
   }
@@ -98,7 +101,7 @@ function main () {
   }
 
   function snakeMove() {
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keyup', (e) => {
       switch (e.key) {
         case 'd': {
           clearInterval(intervalId)
@@ -170,23 +173,24 @@ function main () {
         }
       }
     })
+    // loseConditions()
   }
 
-  snakeMove()  
+  snakeMove()
 
-  // function resetGame() {
-  //   reset.addEventListener('click', () => {
-  //     // location.reload()
-  //     grid.innerHTML = ''
-  //     snake = [149, 150, 151, 152]
-  //     score = 0
-  //     speed = 150
-  //     setup()
-  //     snakeMove()
-  //   })
-  // }
+  function resetGame() {
+    reset.addEventListener('click', () => {
+      location.reload()
+      // grid.innerHTML = ''
+      // snake = [149, 150, 151, 152]
+      // score = 0
+      // speed = 150
+      // setup()
+      // snakeMove()
+    })
+  }
 
-  // resetGame()
+  resetGame()
 
 }
 
