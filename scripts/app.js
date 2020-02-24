@@ -68,7 +68,7 @@ function main () {
 
   function loseConditions() {
     if (cells[snake[snake.length - 1]].classList.contains('border') || selfCollision() === true) {
-      console.log('You lost weyyyyy')
+      console.log('You lost')
       clearInterval(intervalId)
       cells = []
       grid.innerHTML = `GAME OVER! <br>SCORE: ${score}`
@@ -92,7 +92,7 @@ function main () {
   }
 
   function snakeMove() {
-    document.addEventListener('keyup', (e) => {
+    document.addEventListener('keydown', (e) => {
       switch (e.key) {
         case 'd': {
           clearInterval(intervalId)
@@ -180,4 +180,3 @@ function main () {
 }
 
 window.addEventListener('DOMContentLoaded', main)
-
