@@ -18,6 +18,17 @@ body {
   /* background-color: black */
 }
 
+#no-play {
+  display: none;
+  width: 80vw;
+  border: 5px solid purple;
+  background-color: white;
+  font-family: 'Press Start 2P', cursive;
+  color: purple;
+  padding: 5px;
+
+}
+
 h2 {
   font-size: 40px;
   font-family: 'Press Start 2P', cursive;
@@ -162,12 +173,6 @@ h3 {
   /* border: 1px solid white; */
 }
 
-/* #grid div.ghost {
-  width: 40px;
-  height: 40px;
-  background-color: red;
-} */
-
 @keyframes fud {
   0% {
     transform: scale(1.0);
@@ -180,3 +185,17 @@ h3 {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  body p {
+    display: none;
+  }
+  #grid {
+    display: none;
+  }
+  #small-stuff {
+    display: none;
+  }
+  #no-play {
+    display: block;
+  }
+}
