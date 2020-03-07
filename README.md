@@ -35,7 +35,7 @@ I decided to display my grid using an array of div’s then use flex box to posi
 I had 3 types of collisions to deal with, the first with borders, the second with snake ‘food’ and the third, with the snake itself. For all 3, identifying the class of which the collision occurs determined the result. If a user ‘ate’ food they would receive 10 points, if they hit a wall it was game over and the same for if the user collided with themselves.
 - Snake growth logic:
 The snake growth logic required checking for the snake's collision with 'food'. The function below `foodEaten()` check's if the snake's head is equal to that of the food `foodPosition`. If true, it add's to the users score and adds to the snake array by taking the first value in the index and minus 1 from it. Then, the foodRandomise function is called to place the food down elsewhere on the grid and the speed of the snake is increase by 2ms (this is actually reducing the time on the setInterval specificied for the snakes movement). 
-```
+```js
   function foodEaten() {
     if (foodPosition === snake[snake.length - 1]) {
       score += 10
@@ -49,7 +49,7 @@ The snake growth logic required checking for the snake's collision with 'food'. 
 ```
 - Food placement:
 Whilst generating the position of the food, I noticed the possiblity of the food being randomly placed on the snake. To avoid this, I decided to use recursion to run the function until the position the food was placed on a valid index on the grid.
-```
+```js
  function foodRandomise() {
     foodPosition = Math.floor(Math.random() * width ** 2)
     if (snake.includes(foodPosition) || cells[foodPosition].classList.contains('border')) {
@@ -60,6 +60,22 @@ Whilst generating the position of the food, I noticed the possiblity of the food
     }
   }
 ```
+### Snake movement
+- I decided to store the snake in an array as the snake's length would keep increasing thus, the array would get longer. The snake's head for my setup, was the last element in the array and so I would refer to the snake head as such `snake[snake.length - 1]`
+- In order to achieve proper snake movement I realised that wherever the snake head goes, the elements in the snake array now equal the following element in the snake arrays value i.e. `snake[n] = [snake n + 1]`
+- This logic allowed for the body of the snake to behave as it should do in the original game.
+
+```js
+cells[snake[0]].classList.remove('player')
+for (let i = 0; i < snake.length - 1; i++) {
+  snake[i] = snake[i + 1]
+  cells[snake[i]].classList.add('player')
+}
+snake[snake.length - 1] += 1
+cells[snake[snake.length - 1]].classList.add('player')
+foodEaten()
+```
+
 ## Screenshots
 ![Home screen](/images/snake.png)
 ![Game over](/images/gameover.png)
